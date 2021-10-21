@@ -29,7 +29,7 @@ function Canvas(props) {
 
         this.circlesNum = 5;
 
-        this.speed = 2;
+        this.speed = 0.5;
 
         this.width = cnv.clientWidth;
         this.height = cnv.clientHeight;
