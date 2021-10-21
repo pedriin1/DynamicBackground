@@ -12,46 +12,68 @@ function Canvas(props) {
     colors: 5,
     format: "rgb",
   });
-  // const COLORS = [
-  //   { r: 45, g: 74, b: 227 },
-  //   { r: 45, g: 74, b: 227 },
-  //   { r: 45, g: 74, b: 227 },
-  //   { r: 45, g: 74, b: 227 },
-  //   { r: 45, g: 74, b: 227 },
-  // ];
 
   useEffect(() => {
-    // const cnv =
-    // const ctx = canvas.getContext("2d");
+    const cnv = canvasRef.current;
+    const ctx = cnv.getContext(`2d`);
+
+    var x = 100;
+    var y = 100;
+    var dx = 5;
+    var dy = 5;
 
     class GradientAnimation {
       constructor() {
         this.cnv = canvasRef.current;
         this.ctx = this.cnv.getContext(`2d`);
 
-        this.circlesNum = 10;
-        this.minRadius = 1200;
-        this.maxRadius = 1000;
-        this.speed = 1;
+        this.circlesNum = 5;
+
+        this.speed = 2;
+
+        this.width = cnv.clientWidth;
+        this.height = cnv.clientHeight;
+
+        this.minRadius = this.width * 1.5;
+        this.maxRadius = this.width * 1.5;
 
         // (window.onresize = () => {
         //   this.setCanvasSize();
         //   this.createCircles();
         // })();
+        this.resizeCanvasToDisplaySize(cnv);
         this.setCanvasSize();
         this.createCircles();
         this.drawAnimation();
       }
+      resizeCanvasToDisplaySize(canvas) {
+        // look up the size the canvas is being displayed
+
+        // If it's resolution does not match change it
+        if (canvas.width !== this.width || canvas.height !== this.height) {
+          canvas.width = this.width;
+          canvas.height = this.height;
+          return true;
+        }
+
+        return false;
+      }
+
       setCanvasSize() {
-        this.w = this.cnv.width = outerWidth * devicePixelRatio;
-        this.h = this.cnv.height = outerHeight * devicePixelRatio;
-        this.ctx.scale(devicePixelRatio, devicePixelRatio);
+        this.w = this.width;
+        this.h = this.height;
+        // this.ctx.scale(scale, scale);
       }
       createCircles() {
         this.circles = [];
         for (let i = 0; i < this.circlesNum; ++i) {
           this.circles.push(
-            new Circle(this.w, this.h, this.minRadius, this.maxRadius)
+            new Circle(
+              Math.floor(Math.random() * (this.w - 0 + 1) + 0),
+              Math.floor(Math.random() * (this.h - 0 + 1) + 0),
+              this.minRadius,
+              this.maxRadius
+            )
           );
         }
       }
@@ -83,7 +105,7 @@ function Canvas(props) {
             (canvasRef.current.getBoundingClientRect().height * 2 - 30 + 1) +
             30
         );
-        console.log(this.x, this.y);
+        // console.log(this.x, this.y);
         this.angle = Math.random() * Math.PI * 2;
         this.radius = Math.random() * (maxR - minR) + minR;
         this.firstColor = `rgba(${
@@ -107,6 +129,8 @@ function Canvas(props) {
           this.vx = 1;
         }
         if (this.y > canvasRef.current.getBoundingClientRect().height) {
+          console.log(canvasRef.current.getBoundingClientRect().height);
+
           this.vy = -1;
         } else if (this.y < 0) {
           this.vy = 1;
@@ -143,6 +167,15 @@ function Canvas(props) {
         />
         <section className="content">{props.children}</section>
       </div>
+
+      {/* <iframe
+        allow="autoplay *; encrypted-media *; fullscreen *"
+        frameborder="0"
+        height="150"
+        // style="width:100%;max-width:660px;overflow:hidden;background:transparent;"
+        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+        src="https://embed.music.apple.com/br/album/penhasco/1574994387?i=1574994593"
+      ></iframe> */}
     </Container>
   );
 }
