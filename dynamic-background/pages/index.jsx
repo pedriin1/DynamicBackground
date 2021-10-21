@@ -29,13 +29,13 @@ function Canvas(props) {
 
         this.circlesNum = 5;
 
-        this.speed = 0.5;
+        this.speed = 0.8;
 
         this.width = cnv.clientWidth;
         this.height = cnv.clientHeight;
 
-        this.minRadius = this.width * 1.5;
-        this.maxRadius = this.width * 1.5;
+        this.minRadius = this.width * 1.8;
+        this.maxRadius = this.width * 1.8;
 
         // (window.onresize = () => {
         //   this.setCanvasSize();
@@ -108,12 +108,10 @@ function Canvas(props) {
         // console.log(this.x, this.y);
         this.angle = Math.random() * Math.PI * 2;
         this.radius = Math.random() * (maxR - minR) + minR;
-        this.firstColor = `rgba(${
-          colors[Math.floor(Math.random() * (4 - 0 + 1) + 0)]
-        }, 1)`;
-        this.secondColor = `rgba(${
-          colors[Math.floor(Math.random() * (4 - 0 + 1) + 0)]
-        }, 0)`;
+        const currentColor =
+          colors[Math.floor(Math.random() * (4 - 0 + 1) + 0)];
+        this.firstColor = `rgba(${currentColor}, 1)`;
+        this.secondColor = `rgba(${currentColor}, 0)`;
       }
       draw(ctx, speed) {
         this.angle += speed;
@@ -141,7 +139,7 @@ function Canvas(props) {
         gradient.addColorStop(0, this.firstColor);
         gradient.addColorStop(1, this.secondColor);
 
-        ctx.globalCompositeOperation = `multiply`;
+        ctx.globalCompositeOperation = `darken`;
         ctx.filter = "brightness(80%)";
         ctx.fillStyle = gradient;
         ctx.beginPath();
