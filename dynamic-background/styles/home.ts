@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   .container {
     position: relative;
-    height: 100vh;
+    height: 400px;
     width: 100vw;
   }
   .canvas {

@@ -34,8 +34,8 @@ function Canvas(props) {
         this.width = cnv.clientWidth;
         this.height = cnv.clientHeight;
 
-        this.minRadius = this.width * 1.2;
-        this.maxRadius = this.width * 1.2;
+        this.minRadius = this.width * 1.5;
+        this.maxRadius = this.width * 1.5;
 
         // (window.onresize = () => {
         //   this.setCanvasSize();
@@ -142,7 +142,7 @@ function Canvas(props) {
         gradient.addColorStop(1, this.secondColor);
 
         ctx.globalCompositeOperation = `multiply`;
-        ctx.filter = "blur(200px)";
+        ctx.filter = "brightness(80%)";
         ctx.fillStyle = gradient;
         ctx.beginPath();
         ctx.arc(x, y, this.radius, 0, Math.PI * 2);
